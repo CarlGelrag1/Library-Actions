@@ -190,7 +190,7 @@ def COOKIE_STATUS():
 #
 #     # 请求不存在的选座页面,随便选择一个座位
 #     # 正常来说预约是post，但是用get一样可以延长cookie寿命
-#     res=requests.get("http://rg.lib.xauat.edu.cn/api.php/spaces/3787/book",headers=headers)
+#     res=requests.get(http://lxl.sdyu.edu.cn/api.php/spaces/3787/book",headers=headers)
 #
 #     # 将新的cookie写入
 #     cookie_moudle.write_cookies_to_local(res.headers['Set-Cookie'])
@@ -202,7 +202,7 @@ def login_in_1(USERNAME=USERNAME,PASSWORD=PASSWORD):
     多用来登录获取cookie，当登录失败时会调用钉钉进行通知
     """
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
-    res = post(url="http://rg.lib.xauat.edu.cn/api.php/login",
+    res = post(url=http://lxl.sdyu.edu.cn/api.php/login",
                    headers={"Referer": "http://www.skalibrary.com/",
                             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74"},
                    data={"username": USERNAME, "password": PASSWORD, "from": "mobile"})
@@ -228,7 +228,7 @@ def login_in_2(USERNAME=USERNAME,PASSWORD=PASSWORD):
     多用来检查账号的密码的可用性，0-不可用，1-可用，
     """
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
-    res = post(url="http://rg.lib.xauat.edu.cn/api.php/login",
+    res = post(url=http://lxl.sdyu.edu.cn/api.php/login",
                    headers={"Referer": "http://www.skalibrary.com/",
                             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74"},
                    data={"username": USERNAME, "password": PASSWORD, "from": "mobile"})
@@ -279,7 +279,7 @@ def get_area_id():
     :return 0-失败，1-成功
     """
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
-    res = get(url="http://rg.lib.xauat.edu.cn/api.php/areas?tree=1",headers={"Referer": "http://www.skalibrary.com/"})
+    res = get(url=http://lxl.sdyu.edu.cn/api.php/areas?tree=1",headers={"Referer": "http://www.skalibrary.com/"})
     if json.loads(res.content)['status']:
         # 第一层-图书馆信息（可能是两个图书馆），第二层-楼层信息，第三层-空间信息
         for library_info in json.loads(res.content)['data']['list']:
@@ -315,7 +315,7 @@ def url_info():
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
     for area_id in AREA_ID:
         res = get(
-            url=f"http://rg.lib.xauat.edu.cn/api.php/space_time_buckets?area={area_id}&day={datetime.date.today()}",
+            url=fhttp://lxl.sdyu.edu.cn/api.php/space_time_buckets?area={area_id}&day={datetime.date.today()}",
             headers={"Referer": "http://www.skalibrary.com/"})
         if json.loads(res.content)['status']:
             #  spaceId代表这一房间的id，永远不变，SEGMENT=id=bookTimeId，每个房间每天都不一样，含房间和时间信息
@@ -324,7 +324,7 @@ def url_info():
             endTime = json.loads(res.content)['data']['list'][0]['endTime']
             day = json.loads(res.content)['data']['list'][0]['day']
             startTime = json.loads(res.content)['data']['list'][0]['startTime']
-            seat_info_url=f"http://rg.lib.xauat.edu.cn/api.php/spaces_old?area={area_id}&day={day}&endTime={endTime}&segment={id}&startTime={startTime}"
+            seat_info_url=fhttp://lxl.sdyu.edu.cn/api.php/spaces_old?area={area_id}&day={day}&endTime={endTime}&segment={id}&startTime={startTime}"
             SEGMENT.append(id)
             SEAT_INFO_URL.append(seat_info_url)
             print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
@@ -425,7 +425,7 @@ def reserve(USERNAME=USERNAME):
 
         # 预约,需要cookie
         res = post(
-            url=f"http://rg.lib.xauat.edu.cn/api.php/spaces/{SEAT[0]}/book",
+            url=fhttp://lxl.sdyu.edu.cn/api.php/spaces/{SEAT[0]}/book",
             headers={"Referer": "http://www.skalibrary.com/",
                      "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74"},
             data = {"access_token": req.cookies.get("access_token"), "userid": USERNAME, "type": 1,"id": SEAT[0],"segment": SEAT[3]})
@@ -468,7 +468,7 @@ def check_cancel_chance(USERNAME):
     """
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
     res = get(
-        url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/",
+        url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/",
         headers={
             "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -511,7 +511,7 @@ def check_status(USERNAME=USERNAME):
     # 获取预约历史信息,需要cookie:userid=2102210421;access_token=d810f72e23effcd671571dba9d9726df
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
     res = get(
-        url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/",
+        url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/",
         headers={
             "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -561,7 +561,7 @@ def get_now_seat(USERNAME=USERNAME):
     # 注意这里会先查询历史记录，并向RESERVE_SEAT里append一个id编号，不要与自动刷新座位时的append混用
     # 获取预约历史信息,需要cookie:userid=2102210421;access_token=d810f72e23effcd671571dba9d9726df
     res = get(
-        url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/",
+        url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/",
         headers={
             "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -586,7 +586,7 @@ def cancel_reserve(USERNAME=USERNAME):
     # 注意这里会先查询历史记录，并向RESERVED_SEAT里append一个id编号，不要与自动刷新座位时的append混用
     # 获取预约历史信息,需要cookie:userid=2102210421;access_token=d810f72e23effcd671571dba9d9726df
     res = get(
-        url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/",
+        url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/",
         headers={
             "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -596,7 +596,7 @@ def cancel_reserve(USERNAME=USERNAME):
         RESERVED_SEAT.append(json.loads(res.content)['data']['list'][0]['id'])
         # 取消预约
         res = post(
-            url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/{RESERVED_SEAT[-1]}",
+            url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/{RESERVED_SEAT[-1]}",
             headers={
                 "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
                 "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -646,7 +646,7 @@ def checkout(USERNAME):
     # 获取预约历史信息,需要cookie:userid=2102210421;access_token=d810f72e23effcd671571dba9d9726df
     print("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■")
     res = get(
-        url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/",
+        url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/",
         headers={
             "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
             "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -656,7 +656,7 @@ def checkout(USERNAME):
         RESERVED_SEAT.append(json.loads(res.content)['data']['list'][0]['id'])
         # 取消预约
         res = post(
-            url=f"http://rg.lib.xauat.edu.cn/api.php/profile/books/{RESERVED_SEAT[-1]}",
+            url=fhttp://lxl.sdyu.edu.cn/api.php/profile/books/{RESERVED_SEAT[-1]}",
             headers={
                 "Referer": "http://rg.lib.xauat.edu.cn/user/index/book",
                 "User-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_1 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) Version/10.0 Mobile/14E304 Safari/602.1 Edg/99.0.4844.74",
@@ -889,7 +889,7 @@ if __name__ == '__main__':
 #           -需要携带cookie形式1   'Cookie':'PHPSESSID=kv8ab5f268pp5mjld6hmtfuus4; path=/; HttpOnly'
 #           -需要携带cookie形式2   'Cookie':'PHPSESSID=kv8ab5f268pp5mjld6hmtfuus4'
 #           -返回   'Set-Cookie': 'userid=2112211396; path=/, user_name=%E9%99%88%E9%97%AF; path=/, access_token=c8d1e9d1e374fe442bc65b2167cd898e; path=/, expire=2122-13-15+19%3A13%3A11; path=/'
-# 延长cookie和预约 -"http://rg.lib.xauat.edu.cn/api.php/spaces/3787/book"
+# 延长cookie和预约 -http://lxl.sdyu.edu.cn/api.php/spaces/3787/book"
 #                 -需要携带cookie：'Cookie': 'PHPSESSID=nivivdo1ga13s6q2mp8j93ja11;redirect_url=%2Fweb%2Fseat2%2Farea%2F4%2Fday%2F2122-3-15; userid=2112211396;user_name=%E9%99%88%E9%97%AF;access_token=aa61ee9f81dec12734ab8649156688c9;expire=2122-13-16+19%3A57%3A55'
 #                 -需要携带cookie：'Cookie': 'PHPSESSID=nivivdo1ga13s6q2mp8j93ja11; userid=2112211396;user_name=%E9%99%88%E9%97%AF;access_token=aa61ee9f81dec12734ab8649156688c9;expire=2122-13-16+19%3A57%3A55'
 #                 -返回：'Set-Cookie': 'expire=2122-13-16+19%3A57%3A55; path=/'
